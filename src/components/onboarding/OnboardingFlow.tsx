@@ -8,7 +8,7 @@ import { StepContacto } from "./steps/StepContacto";
 import { StepIntereses } from "./steps/StepIntereses";
 import { StepObjetivo } from "./steps/StepObjetivo";
 import type { OnboardingData } from "./types";
-import { ColmenaLogoIcon } from "@/components/ColmenaLogo";
+import { ColmenaLogo } from "@/components/ColmenaLogo";
 
 const STEP_TITLES = [
   { title: "¿Cómo te llamás?", sub: "Usaremos tu nombre para personalizar tu experiencia." },
@@ -64,12 +64,7 @@ export function OnboardingFlow({ userEmail }: OnboardingFlowProps) {
   return (
     <div className="flex flex-col items-center gap-8 w-full max-w-sm">
       {/* Logo */}
-      <div className="flex items-center gap-2">
-        <ColmenaLogoIcon className="h-[26px] w-[22px]" />
-        <span className="text-[21px] font-semibold tracking-[-0.04em] text-secondary leading-none">
-          colmena
-        </span>
-      </div>
+      <ColmenaLogo className="h-[27px] w-auto" />
 
       {/* Progreso */}
       <OnboardingProgress currentStep={step} />

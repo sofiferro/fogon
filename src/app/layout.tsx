@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/Navbar";
 import { createClient } from "@/lib/supabase/server";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "fogon",
@@ -21,7 +17,7 @@ export default async function RootLayout({
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <html lang="es" className={cn("font-sans", inter.variable)}>
+    <html lang="es">
       <body className="antialiased">
         <Navbar user={user} />
         {children}

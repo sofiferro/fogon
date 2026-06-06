@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChevronDown, Search } from "lucide-react";
-import { ColmenaLogoIcon } from "./ColmenaLogo";
+import { ColmenaLogo } from "./ColmenaLogo";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/supabase/actions/auth";
 import type { User } from "@supabase/supabase-js";
@@ -26,11 +26,8 @@ export function Navbar({ user }: NavbarProps) {
             shadow-[0px_1px_1px_rgba(0,0,0,0.05)]"
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <ColmenaLogoIcon className="h-[26px] w-[22px]" />
-            <span className="text-[21px] font-semibold tracking-[-0.04em] text-secondary leading-none">
-              colmena
-            </span>
+          <Link href="/" className="flex items-center shrink-0">
+            <ColmenaLogo className="h-[27px] w-auto" />
           </Link>
 
           {/* Links de navegación */}
