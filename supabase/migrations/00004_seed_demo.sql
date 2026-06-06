@@ -1,11 +1,5 @@
 -- ============================================
--- ANTES de ejecutar esto, creá estos usuarios en
--- Authentication → Users → Add user:
---
--- 1. ong1@demo.com    → copiá su UUID → reemplazá {UUID_ONG1}
--- 2. ong2@demo.com    → copiá su UUID → reemplazá {UUID_ONG2}
--- 3. donante@demo.com → copiá su UUID → reemplazá {UUID_DONANTE}
--- 4. empresa@demo.com → copiá su UUID → reemplazá {UUID_EMPRESA}
+-- SEED DEMO — Ejecutar en SQL Editor
 -- ============================================
 
 -- Indexes
@@ -17,13 +11,13 @@ CREATE INDEX idx_objetivo_donante_anio ON objetivo_donante(donante_id, anio);
 
 -- ONGs
 INSERT INTO ong (id, user_id, nombre, logo_url, descripcion, mp_account_id, tipos_donacion_habilitados) VALUES
-  ('11111111-1111-1111-1111-111111111111', '{UUID_ONG1}', 'Fundación Manos Abiertas', '/icons/ong1.png', 'Ayudamos a comunidades del norte argentino con educación y alimentación.', 'mp_ong1', '{plata,especie,voluntariado}'),
-  ('22222222-2222-2222-2222-222222222222', '{UUID_ONG2}', 'Red de Solidaridad', '/icons/ong2.png', 'Red de apoyo mutuo para familias en situación de vulnerabilidad.', 'mp_ong2', '{plata,voluntariado}');
+  ('11111111-1111-1111-1111-111111111111', 'd4b9365c-bc52-4804-abe3-b17cab471678', 'Fundación Manos Abiertas', '/icons/ong1.png', 'Ayudamos a comunidades del norte argentino con educación y alimentación.', 'mp_ong1', '{plata,especie,voluntariado}'),
+  ('22222222-2222-2222-2222-222222222222', '34cde2df-7986-40c9-ba5a-34a62f54c0ba', 'Red de Solidaridad', '/icons/ong2.png', 'Red de apoyo mutuo para familias en situación de vulnerabilidad.', 'mp_ong2', '{plata,voluntariado}');
 
 -- Donantes
 INSERT INTO donante (id, user_id, tipo, email, nombre, apellido, intereses) VALUES
-  ('dddd1111-1111-1111-1111-111111111111', '{UUID_DONANTE}', 'persona', 'donante@demo.com', 'María', 'González', '{educación,alimentación}'),
-  ('dddd2222-2222-2222-2222-222222222222', '{UUID_EMPRESA}', 'empresa', 'empresa@demo.com', NULL, NULL, NULL);
+  ('dddd1111-1111-1111-1111-111111111111', '2b7d9290-2818-4a5d-a17a-000a39ec5654', 'persona', 'donante@demo.com', 'María', 'González', '{educación,alimentación}'),
+  ('dddd2222-2222-2222-2222-222222222222', '4995f285-f854-4a7f-855a-d2192fc097cc', 'empresa', 'empresa@demo.com', NULL, NULL, NULL);
 
 -- Datos empresa
 UPDATE donante SET
