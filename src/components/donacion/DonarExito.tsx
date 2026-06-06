@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Heart, Package, Users, Check, Copy } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 // ── Types ──────────────────────────────────────────────────────────────────

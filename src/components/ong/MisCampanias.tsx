@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Megaphone, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CampaniaCardOng } from "./CampaniaCardOng";
 import type { CampaniaOng, EstadoCampania } from "./CampaniaCardOng";
@@ -73,12 +73,10 @@ export function MisCampanias({ campanias }: MisCampaniasProps) {
               Creá una campaña para empezar a recibir donaciones.
             </p>
           </div>
-          <Button variant="secondary" size="sm" className="gap-1.5 rounded-full" asChild>
-            <Link href="/ong/causas/nueva">
+          <Link href="/ong/causas/nueva" className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "gap-1.5 rounded-full")}>
               <Plus className="size-4" />
               Nueva campaña
-            </Link>
-          </Button>
+          </Link>
         </div>
       )}
     </div>

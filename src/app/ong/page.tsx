@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { MisCampanias } from "@/components/ong/MisCampanias";
 import type { CampaniaOng } from "@/components/ong/CampaniaCardOng";
 
@@ -70,12 +71,10 @@ export default function OngHomePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-foreground">Mis campañas</h1>
-        <Button variant="secondary" className="gap-2 rounded-full px-5" asChild>
-          <Link href="/ong/causas/nueva">
+        <Link href="/ong/causas/nueva" className={cn(buttonVariants({ variant: "secondary" }), "gap-2 rounded-full px-5")}>
             <Plus className="size-4" />
             Nueva campaña
-          </Link>
-        </Button>
+        </Link>
       </div>
 
       <MisCampanias campanias={MOCK_CAMPANIAS} />

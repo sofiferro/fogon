@@ -92,19 +92,10 @@ function StatCard({
 
 // ── main ───────────────────────────────────────────────────────────────────
 
-type Filtro = "todos" | "nuevos";
-
-const FILTROS: { id: Filtro; label: string }[] = [
-  { id: "todos",  label: "Todos" },
-  { id: "nuevos", label: "Nuevos" },
-];
-
 export function DonantesLista({ campaniaId, campaniaTitulo, donantes }: DonantesListaProps) {
   const nuevos = donantes.filter((d) => d.estado === "nuevo");
   const totalRecaudado = donantes.reduce((s, d) => s + d.totalDonado, 0);
   const promedio = donantes.length ? Math.round(totalRecaudado / donantes.length) : 0;
-
-  const COUNTS: Record<Filtro, number> = { todos: donantes.length, nuevos: nuevos.length };
 
   return (
     <div className="flex flex-col gap-6 px-8 py-7">
