@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export interface OngCardProps {
@@ -9,9 +10,10 @@ export interface OngCardProps {
   logoUrl: string | null;
   categoria: string;
   causasActivas: number;
+  priority?: boolean;
 }
 
-function OngLogo({ src, nombre }: { src: string | null; nombre: string }) {
+function OngLogo({ src, nombre, priority }: { src: string | null; nombre: string; priority?: boolean }) {
   const [error, setError] = useState(false);
 
   if (!src || error) {
@@ -23,22 +25,23 @@ function OngLogo({ src, nombre }: { src: string | null; nombre: string }) {
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       src={src}
       alt={nombre}
+      fill
+      priority={priority}
       onError={() => setError(true)}
-      className="w-full h-full object-cover"
+      className="object-cover"
     />
   );
 }
 
-export function OngCard({ id, nombre, logoUrl, categoria, causasActivas }: OngCardProps) {
+export function OngCard({ id, nombre, logoUrl, categoria, causasActivas, priority }: OngCardProps) {
   return (
     <div className="flex flex-col items-center gap-4 bg-[#fffefa] border border-[#e6dbc5] rounded-[24px] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] pt-4 px-6 pb-6">
       {/* Logo circular */}
       <div className="relative flex items-center justify-center size-[175px] rounded-full border-4 border-[rgba(254,189,48,0.1)] overflow-hidden bg-muted shrink-0">
-        <OngLogo src={logoUrl} nombre={nombre} />
+        <OngLogo src={logoUrl} nombre={nombre} priority={priority} />
       </div>
 
       {/* Info centrada */}

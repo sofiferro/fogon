@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Calendar } from "lucide-react";
 import { CardBadge } from "./CardBadge";
@@ -23,9 +24,10 @@ export interface CausaCardProps {
   objetivoMonto?: number | null;
   progresoPorcentaje?: number | null;
   objetivoDescripcion?: string | null;
+  priority?: boolean;
 }
 
-function CardImage({ src, alt }: { src: string | null; alt: string }) {
+function CardImage({ src, alt, priority }: { src: string | null; alt: string; priority?: boolean }) {
   const [error, setError] = useState(false);
 
   if (!src || error) {
@@ -35,12 +37,13 @@ function CardImage({ src, alt }: { src: string | null; alt: string }) {
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       src={src}
       alt={alt}
+      fill
+      priority={priority}
       onError={() => setError(true)}
-      className="absolute inset-0 w-full h-full object-cover"
+      className="object-cover"
     />
   );
 }
@@ -56,6 +59,7 @@ export function CausaCard({
   objetivoMonto,
   progresoPorcentaje,
   objetivoDescripcion,
+  priority,
 }: CausaCardProps) {
   const dias = diasRestantes(fechaLimite);
   const esPlata = tipoNecesidad === "plata";
@@ -65,7 +69,7 @@ export function CausaCard({
 
       {/* Imagen con gradiente */}
       <div className="relative w-full rounded-[16px] overflow-hidden shrink-0" style={{ aspectRatio: "384/241" }}>
-        <CardImage src={imagenUrl} alt={titulo} />
+        <CardImage src={imagenUrl} alt={titulo} priority={priority} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
       </div>
 

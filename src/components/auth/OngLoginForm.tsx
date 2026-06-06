@@ -5,13 +5,13 @@ import { signIn, signUp } from "@/lib/supabase/actions/auth";
 import { ColmenaLogo } from "@/components/ColmenaLogo";
 import Link from "next/link";
 
-interface LoginFormProps {
+interface OngLoginFormProps {
   redirect?: string;
 }
 
 type Mode = "login" | "signup";
 
-export function LoginForm({ redirect }: LoginFormProps) {
+export function OngLoginForm({ redirect }: OngLoginFormProps) {
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,10 +28,12 @@ export function LoginForm({ redirect }: LoginFormProps) {
 
     if (result.error) {
       setError(result.error);
-    } else {
-      window.location.href = mode === "signup" ? "/onboarding" : (redirect ?? "/");
+      setPending(false);
+      return;
     }
-    setPending(false);
+
+    // Redirigir a onboarding/ong — el page server ya chequea si tiene ONG y redirige a dashboard
+    window.location.href = redirect ?? "/onboarding/ong";
   }
 
   return (
@@ -42,12 +44,12 @@ export function LoginForm({ redirect }: LoginFormProps) {
 
       <div className="text-center">
         <h1 className="text-2xl font-bold text-secondary">
-          {mode === "login" ? "Ingresá a colmena" : "Creá tu cuenta"}
+          {mode === "login" ? "Ingresá a colmena" : "Creá tu cuenta de ONG"}
         </h1>
         <p className="text-sm text-[#767676] mt-1">
           {mode === "login"
             ? "Ingresá con tu email y contraseña."
-            : "Registrate para empezar a donar."}
+            : "Registrate para empezar a recibir donaciones."}
         </p>
       </div>
 
@@ -62,7 +64,7 @@ export function LoginForm({ redirect }: LoginFormProps) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="tu@email.com"
+            placeholder="tu@ong.org"
             className="h-11 px-4 rounded-xl border border-border bg-white text-sm outline-none focus:border-secondary transition-colors placeholder:text-[#897c5e]/60"
           />
         </div>
@@ -110,14 +112,11 @@ export function LoginForm({ redirect }: LoginFormProps) {
           : "Ya tengo cuenta, quiero ingresar"}
       </button>
 
-      {mode === "signup" && (
-        <p className="text-sm text-[#767676]">
-          ¿Representás una ONG?{" "}
-          <Link href="/ong/login" className="text-secondary underline-offset-2 hover:underline">
-            Registrala acá
-          </Link>
-        </p>
-      )}
+      <p className="text-sm text-[#767676]">
+        <Link href="/login" className="text-secondary underline-offset-2 hover:underline">
+          Soy donante, ingresar ahí
+        </Link>
+      </p>
     </div>
   );
 }

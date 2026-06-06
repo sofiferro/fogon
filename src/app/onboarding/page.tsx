@@ -11,12 +11,12 @@ export default async function OnboardingPage() {
   if (!user) redirect("/login");
 
   const { data: donante } = await supabase
-    .from("donantes")
+    .from("donante")
     .select("id")
     .eq("user_id", user.id)
     .maybeSingle();
 
-  if (donante) redirect("/ingresar");
+  if (donante) redirect("/");
 
   return (
     <main className="min-h-screen bg-[#fff2d8] flex items-center justify-center px-6 py-12">

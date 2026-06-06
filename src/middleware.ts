@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Rutas protegidas: requieren sesión
-  const protectedRoutes = ['/onboarding']
+  const protectedRoutes = ['/onboarding', '/ong/dashboard', '/ong/causas']
   if (!user && protectedRoutes.some((r) => pathname.startsWith(r))) {
     return NextResponse.redirect(new URL('/login', request.url))
   }

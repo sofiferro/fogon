@@ -68,17 +68,25 @@ export function Navbar({ user }: NavbarProps) {
             </button>
           </form>
         ) : (
-          <Link
-            href="/login"
-            className={cn(
-              "h-12 px-6 rounded-full inline-flex items-center justify-center",
-              "bg-secondary text-secondary-foreground hover:bg-secondary/90",
-              "text-base font-medium shadow-[0px_1px_1px_rgba(0,0,0,0.05)]",
-              "transition-colors"
-            )}
-          >
-            Ingresar
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/ong/login"
+              className="text-sm font-medium text-foreground hover:opacity-70 transition-opacity"
+            >
+              Soy una ONG
+            </Link>
+            <Link
+              href="/login"
+              className={cn(
+                "h-12 px-6 rounded-full inline-flex items-center justify-center",
+                "bg-secondary text-secondary-foreground hover:bg-secondary/90",
+                "text-base font-medium shadow-[0px_1px_1px_rgba(0,0,0,0.05)]",
+                "transition-colors"
+              )}
+            >
+              Ingresar
+            </Link>
+          </div>
         )}
       </div>
     </header>

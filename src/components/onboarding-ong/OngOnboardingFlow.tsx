@@ -4,20 +4,15 @@ import { useState } from "react";
 import { saveOngOnboarding } from "@/actions/ong";
 import type { OngOnboardingData } from "./types";
 import { StepOngIdentidad } from "./steps/StepOngIdentidad";
-import { StepOngHistoria } from "./steps/StepOngHistoria";
 import { StepOngDatosLegales } from "./steps/StepOngDatosLegales";
-import { StepOngImpacto } from "./steps/StepOngImpacto";
 import { StepOngMercadoPago } from "./steps/StepOngMercadoPago";
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 3;
 
 const NAV_TABS = [
   "1. Identidad",
-  "2. Historia",
-  "3. Datos legales",
-  "4. Impacto",
-  "5. Mercado Pago",
-  "6. Dashboard",
+  "2. Datos legales",
+  "3. Mercado Pago",
 ];
 
 const STEP_META = [
@@ -26,16 +21,8 @@ const STEP_META = [
     sub: "Esta información va a aparecer en tu perfil público.",
   },
   {
-    title: "Contanos más sobre su trabajo",
-    sub: "Ayuda a los donantes a entender a quiénes ayudás.",
-  },
-  {
     title: "Datos de la organización",
     sub: "Necesitamos estos datos para validar tu cuenta.",
-  },
-  {
-    title: "¿Cómo medís el impacto de tu organización?",
-    sub: "Cada ONG tiene su propia forma de medir. Esto va a aparecer en tu perfil público para que los donantes entiendan tu trabajo.",
   },
   {
     title: "Vinculá tu cuenta de Mercado Pago",
@@ -49,24 +36,12 @@ export function OngOnboardingFlow() {
   const [serverError, setServerError] = useState<string | null>(null);
 
   const [data, setData] = useState<OngOnboardingData>({
-    logoFile: null,
-    logoPreview: null,
+    logoUrl: "",
     nombre: "",
     descripcion: "",
     causas: [],
-    aQuienesAyudan: "",
-    zonasOperacion: [],
-    anioFundacion: "",
-    mayorLogro: "",
     razonSocial: "",
     cuit: "",
-    sitioWeb: "",
-    instagram: "",
-    linkedin: "",
-    metricaNombre: "",
-    metricaUnidad: "",
-    metricaFrecuencia: "mensual",
-    mpVinculado: false,
   });
 
   function handleUpdate(updates: Partial<OngOnboardingData>) {
@@ -83,10 +58,9 @@ export function OngOnboardingFlow() {
     const result = await saveOngOnboarding({
       nombre: data.nombre,
       descripcion: data.descripcion,
+      logoUrl: data.logoUrl || null,
       razonSocial: data.razonSocial,
       cuit: data.cuit,
-      instagram: data.instagram,
-      linkedin: data.linkedin,
     });
     if (result?.error) {
       setServerError(result.error);
@@ -171,10 +145,8 @@ export function OngOnboardingFlow() {
 
           {/* Pasos */}
           {step === 0 && <StepOngIdentidad {...stepProps} />}
-          {step === 1 && <StepOngHistoria {...stepProps} />}
-          {step === 2 && <StepOngDatosLegales {...stepProps} />}
-          {step === 3 && <StepOngImpacto {...stepProps} />}
-          {step === 4 && (
+          {step === 1 && <StepOngDatosLegales {...stepProps} />}
+          {step === 2 && (
             <StepOngMercadoPago
               {...stepProps}
               onSubmit={handleSubmit}

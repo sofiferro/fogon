@@ -1,7 +1,5 @@
 "use client";
 
-import { useRef } from "react";
-import { Camera } from "lucide-react";
 import type { OngStepProps } from "../types";
 import { CAUSAS_ONG } from "../types";
 
@@ -11,15 +9,6 @@ const input =
 const label = "text-[14px] font-semibold text-[#510d09]";
 
 export function StepOngIdentidad({ data, onUpdate, onNext }: OngStepProps) {
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  function handleLogoChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const preview = URL.createObjectURL(file);
-    onUpdate({ logoFile: file, logoPreview: preview });
-  }
-
   function toggleCausa(causa: string) {
     const next = data.causas.includes(causa)
       ? data.causas.filter((c) => c !== causa)
@@ -40,33 +29,27 @@ export function StepOngIdentidad({ data, onUpdate, onNext }: OngStepProps) {
       {/* Logo */}
       <div className="flex flex-col gap-2">
         <span className={label}>Logo de la organización</span>
-        <button
-          type="button"
-          onClick={() => fileRef.current?.click()}
-          className="w-[120px] h-[120px] rounded-[16px] border-[2px] border-dashed border-[rgba(81,13,9,0.3)] bg-white flex flex-col items-center justify-center gap-2 hover:border-[rgba(81,13,9,0.5)] transition-colors"
-        >
-          {data.logoPreview ? (
-            <img
-              src={data.logoPreview}
-              alt="Logo"
-              className="w-full h-full object-cover rounded-[14px]"
-            />
-          ) : (
-            <>
-              <Camera size={28} className="text-[rgba(81,13,9,0.35)]" />
-              <span className="text-[12px] text-[rgba(81,13,9,0.45)]">
-                Subir logo
-              </span>
-            </>
+        <div className="flex gap-3 items-start">
+          {data.logoUrl && (
+            <div className="w-[120px] h-[120px] rounded-[16px] border-[1.5px] border-[rgba(81,13,9,0.12)] bg-white overflow-hidden flex-shrink-0">
+              <img
+                src={data.logoUrl}
+                alt="Logo"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
+            </div>
           )}
-        </button>
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleLogoChange}
-        />
+          <input
+            type="url"
+            value={data.logoUrl}
+            onChange={(e) => onUpdate({ logoUrl: e.target.value })}
+            placeholder="https://ejemplo.com/logo.png"
+            className={input + (data.logoUrl ? " flex-1" : " w-full")}
+          />
+        </div>
       </div>
 
       {/* Nombre */}

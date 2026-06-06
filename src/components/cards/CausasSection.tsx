@@ -39,6 +39,7 @@ export async function CausasSection({ title, urgenciaMin, limit = 4 }: CausasSec
             fechaLimite={c.fecha_limite}
             ongNombre={(c.ong as { nombre?: string } | null)?.nombre ?? null}
             objetivoDescripcion={c.tipo_necesidad !== "plata" ? c.descripcion : null}
+            priority
           />
         ))}
       </div>

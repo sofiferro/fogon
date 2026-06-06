@@ -56,7 +56,7 @@ export function StepOngMercadoPago({
         disabled={submitting}
         className="w-full h-[56px] rounded-[16px] bg-[#510d09] text-[#febd30] text-[16px] font-semibold disabled:opacity-60 hover:bg-[#6b1109] transition-colors mt-2"
       >
-        {submitting ? "Guardando..." : "Vincular Mercado Pago ahora"}
+        {submitting ? "Guardando..." : "Vincular ahora"}
       </button>
 
       <button

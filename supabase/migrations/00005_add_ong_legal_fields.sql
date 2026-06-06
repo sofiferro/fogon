@@ -1,0 +1,2 @@
+ALTER TABLE ong ADD COLUMN razon_social TEXT;
+ALTER TABLE ong ADD COLUMN cuit TEXT;

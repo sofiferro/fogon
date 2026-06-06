@@ -10,38 +10,49 @@ interface OngsSectionProps {
 export async function OngsSection({ title = "Conocé ONGs", limit = 5 }: OngsSectionProps) {
   const supabase = createAdminClient();
 
-  // Traer ONGs que tienen campañas activas, con nombre y logo reales
+  // Traer todas las ONGs
+  const { data: todasOngs } = await supabase
+    .from("ong")
+    .select("id, nombre, logo_url");
+
+  if (!todasOngs?.length) return null;
+
+  // Contar campañas activas por ONG
   const { data: campanias } = await supabase
     .from("campania")
-    .select("ong_id, ong(id, nombre, logo_url)")
+    .select("ong_id")
     .eq("estado", "activa");
 
-  if (!campanias?.length) return null;
-
-  const ongMap = new Map<string, { nombre: string; logoUrl: string | null; causasActivas: number }>();
-  for (const c of campanias) {
-    const ong = c.ong as unknown as { id: string; nombre: string; logo_url: string | null } | null;
-    if (!ong) continue;
-    const entry = ongMap.get(ong.id) ?? { nombre: ong.nombre, logoUrl: ong.logo_url, causasActivas: 0 };
-    entry.causasActivas += 1;
-    ongMap.set(ong.id, entry);
+  const conteo = new Map<string, number>();
+  for (const c of campanias ?? []) {
+    conteo.set(c.ong_id, (conteo.get(c.ong_id) ?? 0) + 1);
   }
 
-  const ongs = Array.from(ongMap.entries()).slice(0, limit);
+  const ongs = todasOngs
+    .map((ong) => ({
+      id: ong.id,
+      nombre: ong.nombre,
+      logoUrl: ong.logo_url,
+      causasActivas: conteo.get(ong.id) ?? 0,
+    }))
+    .sort((a, b) => b.causasActivas - a.causasActivas)
+    .slice(0, limit);
+
   if (!ongs.length) return null;
 
   return (
     <section className="flex flex-col gap-5 px-20 w-full">
       <SectionHeader title={title} />
       <div className="grid grid-cols-5 gap-3 w-full">
-        {ongs.map(([id, info]) => (
+        {ongs.map((ong) => (
           <OngCard
-            key={id}
-            id={id}
-            nombre={info.nombre}
-            logoUrl={info.logoUrl}
+            key={ong.id}
+            id={ong.id}
+            nombre={ong.nombre}
+            logoUrl={ong.logoUrl}
             categoria=""
-            causasActivas={info.causasActivas}
+            causasActivas={ong.causasActivas}
+            priority
           />
         ))}
       </div>

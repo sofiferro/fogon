@@ -57,7 +57,7 @@ export function StepSuccess() {
 
         {/* CTA */}
         <button
-          onClick={() => router.push("/ingresar")}
+          onClick={() => router.push("/")}
           className="w-full h-[56px] rounded-[16px] bg-[#febd30] text-[#510d09] text-[16px] font-semibold hover:bg-[#f5b520] transition-colors"
         >
           Ir al inicio

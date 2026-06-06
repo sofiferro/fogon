@@ -30,6 +30,16 @@ export async function signUp(email: string, password: string) {
     return { error: error.message };
   }
 
+  // Auto-login después del signup
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (signInError) {
+    return { error: signInError.message };
+  }
+
   return { error: null };
 }
 

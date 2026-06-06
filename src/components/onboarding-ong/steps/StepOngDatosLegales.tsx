@@ -7,12 +7,6 @@ const input =
 
 const label = "text-[14px] font-semibold text-[#510d09]";
 
-const OptionalBadge = () => (
-  <span className="text-[11px] font-semibold text-[#febd30] bg-[#febd30]/15 px-2 py-[2px] rounded-full">
-    Opcional
-  </span>
-);
-
 export function StepOngDatosLegales({ data, onUpdate, onNext, onBack }: OngStepProps) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -49,77 +43,6 @@ export function StepOngDatosLegales({ data, onUpdate, onNext, onBack }: OngStepP
           placeholder="30-12345678-9"
           className={input}
         />
-      </div>
-
-      {/* Sitio web */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <span className={label}>Sitio web</span>
-          <OptionalBadge />
-        </div>
-        <input
-          type="url"
-          value={data.sitioWeb}
-          onChange={(e) => onUpdate({ sitioWeb: e.target.value })}
-          placeholder="https://tungo.org.ar"
-          className={input}
-        />
-      </div>
-
-      {/* Redes sociales */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <span className={label}>Redes sociales</span>
-          <OptionalBadge />
-        </div>
-        <div className="flex gap-3">
-          {/* Instagram */}
-          <div className="flex-1 relative">
-            <div className="absolute left-[14px] top-1/2 -translate-y-1/2">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="rgba(81,13,9,0.4)"
-                strokeWidth="1.8"
-              >
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="rgba(81,13,9,0.4)" stroke="none" />
-              </svg>
-            </div>
-            <input
-              type="text"
-              value={data.instagram}
-              onChange={(e) => onUpdate({ instagram: e.target.value })}
-              placeholder="@usuario"
-              className="w-full h-[51px] pl-[40px] pr-[14px] bg-white rounded-[14px] border-[1.5px] border-[rgba(81,13,9,0.15)] text-[14px] text-[#1a1a1a] placeholder:text-[rgba(81,13,9,0.35)] outline-none focus:border-[rgba(81,13,9,0.4)] transition-colors"
-            />
-          </div>
-          {/* LinkedIn */}
-          <div className="flex-1 relative">
-            <div className="absolute left-[14px] top-1/2 -translate-y-1/2">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="rgba(81,13,9,0.4)"
-              >
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                <rect x="2" y="9" width="4" height="12" />
-                <circle cx="4" cy="4" r="2" />
-              </svg>
-            </div>
-            <input
-              type="text"
-              value={data.linkedin}
-              onChange={(e) => onUpdate({ linkedin: e.target.value })}
-              placeholder="linkedin.com/in/..."
-              className="w-full h-[51px] pl-[40px] pr-[14px] bg-white rounded-[14px] border-[1.5px] border-[rgba(81,13,9,0.15)] text-[14px] text-[#1a1a1a] placeholder:text-[rgba(81,13,9,0.35)] outline-none focus:border-[rgba(81,13,9,0.4)] transition-colors"
-            />
-          </div>
-        </div>
       </div>
 
       {/* Aviso privacidad */}
