@@ -10,7 +10,7 @@ export default async function OnboardingPage() {
 
   // Si ya completó el onboarding, mandarlo a ingresar
   const { data: donante } = await supabase
-    .from("donantes")
+      .from("donante")
     .select("id")
     .eq("user_id", user.id)
     .maybeSingle();
