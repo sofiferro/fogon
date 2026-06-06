@@ -6,7 +6,10 @@ import {
   integer,
   decimal,
   pgEnum,
+  check,
+  unique,
 } from 'drizzle-orm/pg-core'
+import { sql } from 'drizzle-orm'
 
 // Enums
 export const tipoDonacionEnum = pgEnum('tipo_donacion', [
@@ -94,7 +97,9 @@ export const campania = pgTable('campania', {
   localId: uuid('local_id').unique(),
   syncEstado: syncEstadoEnum('sync_estado').default('sincronizada'),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
-})
+}, (t) => [
+  check('urgencia_check', sql`${t.urgencia} BETWEEN 1 AND 5`),
+])
 
 export const itemPedido = pgTable('item_pedido', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -154,9 +159,11 @@ export const objetivoDonante = pgTable('objetivo_donante', {
   metaCantidad: integer('meta_cantidad'),
   metaMonto: decimal('meta_monto', { precision: 10, scale: 2 }),
   progresoCantidad: integer('progreso_cantidad').default(0),
-  progresoMonto: decimal('progreso_monto', { precision: 10, scale: 2 }).default(0),
+  progresoMonto: decimal('progreso_monto', { precision: 10, scale: 2 }).default("0"),
   estado: estadoObjetivoEnum('estado').default('sin_meta'),
-})
+}, (t) => [
+  unique('objetivo_donante_donante_anio_tipo_uniq').on(t.donanteId, t.anio, t.tipo),
+])
 
 // Reference to auth.users (Supabase)
 const authUsers = pgTable('auth.users', {
