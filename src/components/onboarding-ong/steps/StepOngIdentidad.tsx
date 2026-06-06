@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import type { OngStepProps } from "../types";
 import { CAUSAS_ONG } from "../types";
 
@@ -33,11 +32,10 @@ export function StepOngIdentidad({ data, onUpdate, onNext }: OngStepProps) {
         <div className="flex gap-3 items-start">
           {data.logoUrl && (
             <div className="w-[120px] h-[120px] rounded-[16px] border-[1.5px] border-[rgba(81,13,9,0.12)] bg-white overflow-hidden flex-shrink-0">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={data.logoUrl}
                 alt="Logo"
-                width={120}
-                height={120}
                 className="w-full h-full object-cover"
               />
             </div>
