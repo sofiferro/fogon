@@ -1,0 +1,67 @@
+import Link from "next/link";
+import { ChevronDown, Search } from "lucide-react";
+import { ColmenaLogoIcon } from "./ColmenaLogo";
+import { cn } from "@/lib/utils";
+
+const NAV_LINKS = [
+  { label: "Donar", href: "/donar" },
+  { label: "ONGs", href: "/ongs" },
+  { label: "Empresas", href: "/empresas" },
+];
+
+export function Navbar() {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-6 pt-4">
+      <div className="flex items-center gap-6">
+        {/* Píldora principal */}
+        <nav
+          className="flex items-center gap-20 h-12 px-8 rounded-full
+            bg-muted border border-border
+            shadow-[0px_1px_1px_rgba(0,0,0,0.05)]"
+        >
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <ColmenaLogoIcon className="h-[26px] w-[22px]" />
+            <span className="text-[21px] font-semibold tracking-[-0.04em] text-secondary leading-none">
+              colmena
+            </span>
+          </Link>
+
+          {/* Links de navegación */}
+          <div className="flex items-center gap-8">
+            {/* Buscar */}
+            <button className="flex items-center gap-2 text-sm font-medium text-foreground hover:opacity-70 transition-opacity">
+              <Search size={16} strokeWidth={2} />
+              Buscar
+            </button>
+
+            {/* Links con chevron */}
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex items-center gap-1 text-sm font-medium text-foreground hover:opacity-70 transition-opacity"
+              >
+                {link.label}
+                <ChevronDown size={10} strokeWidth={2.5} />
+              </Link>
+            ))}
+          </div>
+        </nav>
+
+        {/* Botón Ingresar */}
+        <Link
+          href="/login"
+          className={cn(
+            "h-12 px-6 rounded-full inline-flex items-center justify-center",
+            "bg-secondary text-secondary-foreground hover:bg-secondary/90",
+            "text-base font-medium shadow-[0px_1px_1px_rgba(0,0,0,0.05)]",
+            "transition-colors"
+          )}
+        >
+          Ingresar
+        </Link>
+      </div>
+    </header>
+  );
+}

@@ -25,7 +25,19 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
+  const { pathname } = request.nextUrl
+
+  // Rutas protegidas: requieren sesión
+  const protectedRoutes = ['/onboarding']
+  if (!user && protectedRoutes.some((r) => pathname.startsWith(r))) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  // Si ya está logueado y va al login, redirigir a ingresar
+  if (user && pathname === '/login') {
+    return NextResponse.redirect(new URL('/ingresar', request.url))
+  }
 
   return supabaseResponse
 }
