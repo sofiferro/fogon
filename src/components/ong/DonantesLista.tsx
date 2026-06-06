@@ -130,7 +130,7 @@ export function DonantesLista({ campaniaId, campaniaTitulo, donantes }: Donantes
             <Pencil className="size-3.5" />
             Editar campaña
           </Link>
-          <Button variant="secondary" size="sm" className="gap-1.5">
+          <Button variant="outline" size="sm" className="gap-1.5">
             <Pause className="size-3.5" />
             Pausar campaña
           </Button>
