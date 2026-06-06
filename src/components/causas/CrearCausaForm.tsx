@@ -46,7 +46,29 @@ export function CrearCausaForm() {
   const [urgencia, setUrgencia] = useState("");
   const [metrica, setMetrica] = useState("");
 
+  const [publicando, setPublicando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  function handlePublicar() {
+    if (!titulo.trim() || !descripcion.trim()) {
+      setError("Completá el título y la descripción.");
+      return;
+    }
+    setPublicando(true);
+    const campania = {
+      id: crypto.randomUUID(),
+      titulo,
+      descripcion,
+      tipo,
+      fechaLimite,
+      imagenPreview,
+      creadaEn: new Date().toISOString(),
+    };
+    const previas = JSON.parse(localStorage.getItem("campanias_demo") ?? "[]");
+    localStorage.setItem("campanias_demo", JSON.stringify([...previas, campania]));
+    window.location.href = "/ong/dashboard";
+  }
 
   function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -82,8 +104,9 @@ export function CrearCausaForm() {
           <h1 className="font-semibold">Nueva campaña</h1>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">Guardar borrador</Button>
-          <Button variant="secondary" size="sm">Publicar campaña</Button>
+          <Button variant="secondary" size="sm" onClick={handlePublicar} disabled={publicando}>
+            {publicando ? "Publicando..." : "Publicar campaña"}
+          </Button>
         </div>
       </header>
 
@@ -371,13 +394,15 @@ export function CrearCausaForm() {
       </div>
 
       {/* Footer */}
-      <footer className="sticky bottom-0 border-t border-border bg-card px-6 py-4 flex items-center justify-between">
+      <footer className="sticky bottom-0 border-t border-border bg-card px-6 py-4 flex items-center justify-between gap-4">
         <Link href="/ong">
           <Button variant="ghost" size="sm">← Cancelar</Button>
         </Link>
+        {error && <p className="text-sm text-red-600 flex-1 text-center">{error}</p>}
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">Guardar borrador</Button>
-          <Button variant="secondary" size="sm">Publicar campaña</Button>
+          <Button variant="secondary" size="sm" onClick={handlePublicar} disabled={publicando}>
+            {publicando ? "Publicando..." : "Publicar campaña"}
+          </Button>
         </div>
       </footer>
     </div>
