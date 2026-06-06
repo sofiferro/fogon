@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ChevronDown, Search } from "lucide-react";
 import { ColmenaLogoIcon } from "./ColmenaLogo";
 import { cn } from "@/lib/utils";
+import { logout } from "@/lib/supabase/actions/auth";
+import type { User } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
   { label: "Donar", href: "/donar" },
@@ -9,7 +11,11 @@ const NAV_LINKS = [
   { label: "Empresas", href: "/empresas" },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  user?: User | null;
+}
+
+export function Navbar({ user }: NavbarProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-6 pt-4">
       <div className="flex items-center gap-6">
@@ -49,18 +55,34 @@ export function Navbar() {
           </div>
         </nav>
 
-        {/* Botón Ingresar */}
-        <Link
-          href="/login"
-          className={cn(
-            "h-12 px-6 rounded-full inline-flex items-center justify-center",
-            "bg-secondary text-secondary-foreground hover:bg-secondary/90",
-            "text-base font-medium shadow-[0px_1px_1px_rgba(0,0,0,0.05)]",
-            "transition-colors"
-          )}
-        >
-          Ingresar
-        </Link>
+        {/* Botón Ingresar / Cerrar sesión */}
+        {user ? (
+          <form action={logout}>
+            <button
+              type="submit"
+              className={cn(
+                "h-12 px-6 rounded-full inline-flex items-center justify-center",
+                "bg-secondary text-secondary-foreground hover:bg-secondary/90",
+                "text-base font-medium shadow-[0px_1px_1px_rgba(0,0,0,0.05)]",
+                "transition-colors"
+              )}
+            >
+              Cerrar sesión
+            </button>
+          </form>
+        ) : (
+          <Link
+            href="/login"
+            className={cn(
+              "h-12 px-6 rounded-full inline-flex items-center justify-center",
+              "bg-secondary text-secondary-foreground hover:bg-secondary/90",
+              "text-base font-medium shadow-[0px_1px_1px_rgba(0,0,0,0.05)]",
+              "transition-colors"
+            )}
+          >
+            Ingresar
+          </Link>
+        )}
       </div>
     </header>
   );

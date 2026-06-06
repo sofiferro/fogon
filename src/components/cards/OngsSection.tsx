@@ -10,19 +10,22 @@ interface OngsSectionProps {
 export async function OngsSection({ title = "Conocé ONGs", limit = 5 }: OngsSectionProps) {
   const supabase = await createClient();
 
-  // Traemos ONGs distintas que tienen campañas activas (sin necesitar leer ong directamente)
+  // Traemos ONGs distintas que tienen campañas activas con su info
   const { data: campanias } = await supabase
     .from("campania")
-    .select("ong_id, tipo_necesidad")
+    .select("ong_id, tipo_necesidad, ong(id, nombre, logo_url)")
     .eq("estado", "activa");
 
   if (!campanias?.length) return null;
 
   // Agrupamos por ong_id
-  const ongMap = new Map<string, { causasActivas: number; tipos: string[] }>();
+  const ongMap = new Map<string, { nombre: string; logo_url: string | null; causasActivas: number; tipos: string[] }>();
   for (const c of campanias) {
     if (!c.ong_id) continue;
-    const entry = ongMap.get(c.ong_id) ?? { causasActivas: 0, tipos: [] };
+    const entry = ongMap.get(c.ong_id) ?? { nombre: "", logo_url: null, causasActivas: 0, tipos: [] };
+    const ongData = Array.isArray(c.ong) ? c.ong[0] : c.ong;
+    if (!entry.nombre && ongData) entry.nombre = ongData.nombre;
+    if (!entry.logo_url && ongData) entry.logo_url = ongData.logo_url;
     entry.causasActivas += 1;
     if (!entry.tipos.includes(c.tipo_necesidad)) entry.tipos.push(c.tipo_necesidad);
     ongMap.set(c.ong_id, entry);
@@ -42,8 +45,8 @@ export async function OngsSection({ title = "Conocé ONGs", limit = 5 }: OngsSec
             <OngCard
               key={ongId}
               id={ongId}
-              nombre={ongId.slice(0, 8).toUpperCase()}
-              logoUrl={null}
+              nombre={info.nombre}
+              logoUrl={info.logo_url}
               categoria={tipoLabel}
               causasActivas={info.causasActivas}
             />
