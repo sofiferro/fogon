@@ -6,9 +6,8 @@ import { logout } from "@/lib/supabase/actions/auth";
 import type { User } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
-  { label: "Donar", href: "/donar" },
-  { label: "ONGs", href: "/ongs" },
-  { label: "Empresas", href: "/empresas" },
+  { label: "Causas", href: "/#causas" },
+  { label: "ONGs", href: "/#ongs" },
 ];
 
 interface NavbarProps {
