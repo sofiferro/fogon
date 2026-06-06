@@ -38,7 +38,7 @@ export function OnboardingFlow({ userEmail }: OnboardingFlowProps) {
     email: userEmail,
     intereses: [],
     objetivo_tipos: [],
-    meta_plata: "",
+    meta_dinero: "",
     meta_especie: "",
     meta_voluntariado: "",
   });
@@ -64,7 +64,7 @@ export function OnboardingFlow({ userEmail }: OnboardingFlowProps) {
       email: data.email,
       intereses: data.intereses,
       objetivo_tipos: data.objetivo_tipos,
-      meta_plata: data.meta_plata ? Number(data.meta_plata) : null,
+      meta_dinero: data.meta_dinero ? Number(data.meta_dinero) : null,
       meta_especie: data.meta_especie ? Number(data.meta_especie) : null,
       meta_voluntariado: data.meta_voluntariado ? Number(data.meta_voluntariado) : null,
     });

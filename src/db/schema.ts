@@ -11,11 +11,11 @@ import {
 
 // Enums
 export const tipoDonacionEnum = pgEnum('tipo_donacion', [
-  'plata', 'especie', 'voluntariado', 'general',
+  'dinero', 'especie', 'voluntariado', 'general',
 ])
 
 export const tipoNecesidadEnum = pgEnum('tipo_necesidad', [
-  'plata', 'especie', 'voluntariado',
+  'dinero', 'especie', 'voluntariado',
 ])
 
 export const targetDonanteEnum = pgEnum('target_donante', [
@@ -35,7 +35,7 @@ export const tipoDonanteEnum = pgEnum('tipo_donante', [
 ])
 
 export const tipoAporteEnum = pgEnum('tipo_aporte', [
-  'plata', 'especie', 'voluntariado',
+  'dinero', 'especie', 'voluntariado',
 ])
 
 export const modalidadAporteEnum = pgEnum('modalidad_aporte', [
@@ -51,7 +51,7 @@ export const modalidadGeneralEnum = pgEnum('modalidad_general', [
 ])
 
 export const tipoObjetivoEnum = pgEnum('tipo_objetivo', [
-  'plata', 'especie', 'voluntariado',
+  'dinero', 'especie', 'voluntariado',
 ])
 
 export const estadoObjetivoEnum = pgEnum('estado_objetivo', [

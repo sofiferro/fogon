@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { SearchResult } from "@/hooks/useSearch";
+import { causaSlug } from "@/lib/slug";
 
 const TIPO_LABEL: Record<string, string> = {
-  plata: "Plata",
+  dinero: "Dinero",
   especie: "Cosas",
   voluntariado: "Voluntariado",
 };
@@ -15,7 +16,7 @@ interface SearchResultItemProps {
 export function SearchResultItem({ result, onSelect }: SearchResultItemProps) {
   return (
     <Link
-      href={`/login?redirect=/causas/${result.id}`}
+      href={`/login?redirect=/causas/${causaSlug(result.titulo, result.id)}`}
       onClick={onSelect}
       className="flex items-start gap-3 px-4 py-3 hover:bg-muted/60 transition-colors rounded-xl"
     >

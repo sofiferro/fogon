@@ -1,7 +1,7 @@
 import type { StepProps } from "../types";
 
 const META_CONFIG = {
-  plata: { label: "Donar en plata", prefix: "$", suffix: null, field: "meta_plata" as const },
+  dinero: { label: "Donar en dinero", prefix: "$", suffix: null, field: "meta_dinero" as const },
   especie: { label: "Donaciones en especie", prefix: null, suffix: "veces", field: "meta_especie" as const },
   voluntariado: { label: "Voluntariados", prefix: null, suffix: "veces", field: "meta_voluntariado" as const },
 };

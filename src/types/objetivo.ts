@@ -1,4 +1,4 @@
-export type TipoObjetivo = 'plata' | 'especie' | 'voluntariado'
+export type TipoObjetivo = 'dinero' | 'especie' | 'voluntariado'
 export type EstadoObjetivo = 'en_curso' | 'cumplido' | 'sin_meta'
 
 export interface ObjetivoDonante {

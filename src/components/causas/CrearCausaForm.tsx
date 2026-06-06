@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-type TipoNecesidad = "plata" | "especie" | "voluntariado";
+type TipoNecesidad = "dinero" | "especie" | "voluntariado";
 
 const URGENCIA_OPTIONS = [
   { value: "1", label: "Baja" },
@@ -21,7 +21,7 @@ const URGENCIA_OPTIONS = [
 ];
 
 const TIPO_OPTIONS: { id: TipoNecesidad; label: string; icon: React.ElementType }[] = [
-  { id: "plata", label: "Dinero", icon: Coins },
+  { id: "dinero", label: "Dinero", icon: Coins },
   { id: "especie", label: "Lista de pedidos", icon: List },
   { id: "voluntariado", label: "Voluntariado", icon: Hand },
 ];
@@ -36,7 +36,7 @@ export function CrearCausaForm() {
   const [imagenPreview, setImagenPreview] = useState<string | null>(null);
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [tipo, setTipo] = useState<TipoNecesidad>("plata");
+  const [tipo, setTipo] = useState<TipoNecesidad>("dinero");
   const [objetivoMonto, setObjetivoMonto] = useState("");
   const [items, setItems] = useState<{ id: string; nombre: string }[]>([]);
   const [nuevoItem, setNuevoItem] = useState("");
@@ -67,7 +67,7 @@ export function CrearCausaForm() {
     setNuevoItem("");
   }
 
-  const tipoLabel = tipo === "plata" ? "dinero" : tipo === "especie" ? "cosas" : "voluntariado";
+  const tipoLabel = tipo === "dinero" ? "dinero" : tipo === "especie" ? "cosas" : "voluntariado";
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -164,7 +164,7 @@ export function CrearCausaForm() {
               </div>
 
               {/* Dinero */}
-              {tipo === "plata" && (
+              {tipo === "dinero" && (
                 <div className="space-y-4 pt-2 border-t border-border">
                   <h3 className="text-sm font-semibold pt-2">Recaudación</h3>
                   <div className="space-y-1.5">
@@ -339,7 +339,7 @@ export function CrearCausaForm() {
                 <p className="text-xs text-[#767676] line-clamp-2">
                   {descripcion || "Tu descripción aparecerá aquí..."}
                 </p>
-                {tipo === "plata" && (
+                {tipo === "dinero" && (
                   <>
                     <p className="text-sm font-semibold text-[#1a1a1a]">
                       ${objetivoMonto ? Number(objetivoMonto).toLocaleString("es-AR") : "0"}

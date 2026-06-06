@@ -39,7 +39,7 @@ const STEP_META = [
   },
   {
     title: "Vinculá tu cuenta de Mercado Pago",
-    sub: "Para recibir donaciones en plata necesitás conectar tu cuenta de MP.",
+    sub: "Para recibir donaciones en dinero necesitás conectar tu cuenta de MP.",
   },
 ];
 

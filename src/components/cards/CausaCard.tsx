@@ -5,9 +5,10 @@ import { useState } from "react";
 import { Calendar } from "lucide-react";
 import { CardBadge } from "./CardBadge";
 import { diasRestantes, formatMonto } from "@/lib/dates";
+import { causaSlug } from "@/lib/slug";
 
 const TIPO_LABEL: Record<string, string> = {
-  plata: "Plata",
+  dinero: "Dinero",
   especie: "Cosas",
   voluntariado: "Voluntariado",
 };
@@ -16,7 +17,7 @@ export interface CausaCardProps {
   id: string;
   titulo: string;
   imagenUrl: string | null;
-  tipoNecesidad: "plata" | "especie" | "voluntariado";
+  tipoNecesidad: "dinero" | "especie" | "voluntariado";
   fechaLimite: string | null;
   ongNombre: string | null;
   categorias?: string[];
@@ -58,7 +59,7 @@ export function CausaCard({
   objetivoDescripcion,
 }: CausaCardProps) {
   const dias = diasRestantes(fechaLimite);
-  const esPlata = tipoNecesidad === "plata";
+  const esDinero = tipoNecesidad === "dinero";
 
   return (
     <div className="relative flex flex-col gap-4 bg-[#fffefa] border border-[#e6dbc5] rounded-[24px] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] pt-4 px-4 pb-6 h-full">
@@ -103,12 +104,12 @@ export function CausaCard({
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between text-[13px] font-medium text-[#1a1a1a] whitespace-nowrap">
             <span className="opacity-[0.56]">Objetivo</span>
-            {esPlata && objetivoMonto != null && (
+            {esDinero && objetivoMonto != null && (
               <span>{formatMonto(objetivoMonto)}</span>
             )}
           </div>
 
-          {esPlata ? (
+          {esDinero ? (
             <div
               className="h-2 w-full rounded-full overflow-hidden"
               style={{ background: "rgba(230,219,197,0.5)" }}
@@ -128,7 +129,7 @@ export function CausaCard({
 
       {/* CTA */}
       <Link
-        href={`/causas/${id}`}
+        href={`/causas/${causaSlug(titulo, id)}`}
         className="flex items-center justify-center h-8 rounded-full bg-[#febd30] text-[#510d09] text-[12px] font-medium hover:bg-[#febd30]/90 transition-colors shrink-0 w-full"
       >
         Quiero donar

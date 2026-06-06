@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FilterPill } from "./FilterPill";
 
 const FILTERS = [
   "Todas",
   "Urgente",
-  "Plata",
+  "Dinero",
   "Cosas",
   "Voluntariado",
   "Salud",
@@ -16,7 +16,20 @@ const FILTERS = [
 ];
 
 export function FilterRow() {
-  const [active, setActive] = useState("Todas");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const active = searchParams.get("filter") ?? "Todas";
+
+  function handleFilter(filter: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (filter === "Todas") {
+      params.delete("filter");
+    } else {
+      params.set("filter", filter);
+    }
+    const qs = params.toString();
+    router.push(qs ? `/?${qs}` : "/");
+  }
 
   return (
     <div className="flex gap-2 items-center justify-center flex-wrap">
@@ -25,7 +38,7 @@ export function FilterRow() {
           key={filter}
           label={filter}
           active={active === filter}
-          onClick={() => setActive(filter)}
+          onClick={() => handleFilter(filter)}
         />
       ))}
     </div>
