@@ -104,6 +104,7 @@ export function SidebarEspecie({
     } else {
       setYaContactado(true);
       setModalOpen(false);
+      router.refresh();
     }
   }
 
@@ -178,7 +179,7 @@ export function SidebarEspecie({
           />
 
           {/* Panel */}
-          <div className="relative bg-white rounded-[24px] p-8 w-full max-w-[540px] flex flex-col gap-6 shadow-xl z-10">
+          <div className="relative bg-white rounded-[24px] p-8 w-full max-w-[540px] max-h-[90vh] overflow-y-auto flex flex-col gap-6 shadow-xl z-10 my-auto">
             {/* Cerrar */}
             <button
               onClick={() => setModalOpen(false)}

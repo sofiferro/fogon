@@ -65,7 +65,7 @@ export function DonarUnaVezModal({ ongNombre, onClose, onConfirm }: DonarUnaVezM
         aria-modal="true"
         aria-label={`Doná por única vez a ${ongNombre}`}
         onClick={(e) => e.stopPropagation()}
-        className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-full max-w-[380px] bg-card rounded-2xl shadow-xl p-6 flex flex-col gap-5"
+        className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-full max-w-[380px] max-h-[90vh] overflow-y-auto bg-card rounded-2xl shadow-xl p-6 flex flex-col gap-5"
       >
         <h2 className="font-bold text-lg text-foreground">Doná por única vez</h2>
 
