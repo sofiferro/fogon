@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { signIn, signUp } from "@/lib/supabase/actions/auth";
-import { ColmenaLogoIcon } from "@/components/ColmenaLogo";
+import { ColmenaLogo } from "@/components/ColmenaLogo";
 import Link from "next/link";
 
 interface LoginFormProps {
@@ -36,11 +36,8 @@ export function LoginForm({ redirect }: LoginFormProps) {
 
   return (
     <div className="flex flex-col items-center gap-8 w-full max-w-sm">
-      <Link href="/" className="flex items-center gap-2">
-        <ColmenaLogoIcon className="h-[26px] w-[22px]" />
-        <span className="text-[21px] font-semibold tracking-[-0.04em] text-secondary leading-none">
-          colmena
-        </span>
+      <Link href="/">
+        <ColmenaLogo className="h-[27px] w-auto" />
       </Link>
 
       <div className="text-center">
