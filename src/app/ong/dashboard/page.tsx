@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { ColmenaLogoIcon } from "@/components/ColmenaLogo";
+import { CampaniasDemoList } from "@/components/ong/CampaniasDemoList";
 
 export default async function OngDashboardPage() {
   const supabase = await createClient();
@@ -135,6 +136,8 @@ export default async function OngDashboardPage() {
             </div>
           </div>
         </div>
+
+        <CampaniasDemoList />
 
         {/* Estadísticas */}
         <div className="flex flex-col gap-3">
