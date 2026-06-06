@@ -4,7 +4,7 @@ import { ConditionalNavbar } from "@/components/ConditionalNavbar";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "fogon",
+  title: "Colmena",
   description: "Plataforma que conecta ONGs con donantes",
 };
 

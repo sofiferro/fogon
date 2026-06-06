@@ -1,4 +1,4 @@
-export type TipoNecesidad = 'plata' | 'especie' | 'voluntariado'
+export type TipoNecesidad = 'dinero' | 'especie' | 'voluntariado'
 export type TargetDonante = 'persona' | 'empresa'
 export type EstadoCampania = 'activa' | 'cerrada' | 'eliminada'
 export type SyncEstado = 'pendiente' | 'sincronizada'

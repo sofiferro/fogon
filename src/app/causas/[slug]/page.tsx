@@ -4,21 +4,23 @@ import { ChevronLeft, Calendar } from "lucide-react";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { diasRestantes } from "@/lib/dates";
+import { idFromCausaSlug } from "@/lib/slug";
 import { DonacionForm } from "./DonacionForm";
 import { SidebarEspecie } from "./SidebarEspecie";
 
 const TIPO_LABEL: Record<string, string> = {
-  plata: "Plata",
+  dinero: "Dinero",
   especie: "Cosas",
   voluntariado: "Voluntariado",
 };
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 export default async function CausaDetailPage({ params }: Props) {
-  const { id } = await params;
+  const { slug } = await params;
+  const id = idFromCausaSlug(slug);
   const supabase = createAdminClient();
 
   const { data: campania } = await supabase
@@ -30,13 +32,13 @@ export default async function CausaDetailPage({ params }: Props) {
 
   if (!campania) notFound();
 
-  const tipo = campania.tipo_necesidad as "plata" | "especie" | "voluntariado";
+  const tipo = campania.tipo_necesidad as "dinero" | "especie" | "voluntariado";
   const ong = campania.ong as { id: string; nombre: string; logo_url: string | null } | null;
   const dias = diasRestantes(campania.fecha_limite);
 
   // Para plata: aportes confirmados con monto
   // Para especie/voluntariado: aportes a_coordinar como "contactos"
-  const estadoAporte = tipo === "plata" ? "confirmado" : "a_coordinar";
+  const estadoAporte = tipo === "dinero" ? "confirmado" : "a_coordinar";
 
   const { data: aportes } = await supabase
     .from("aporte")
@@ -47,7 +49,7 @@ export default async function CausaDetailPage({ params }: Props) {
     .limit(5);
 
   // Para especie: items pedidos
-  const { data: itemsPedidos } = tipo !== "plata"
+  const { data: itemsPedidos } = tipo !== "dinero"
     ? await supabase
         .from("item_pedido")
         .select("nombre, cantidad")
@@ -63,30 +65,30 @@ export default async function CausaDetailPage({ params }: Props) {
 
   // Para plata: total recaudado
   const recaudadoTotal =
-    tipo === "plata"
+    tipo === "dinero"
       ? (aportes?.reduce((acc, a) => acc + (parseFloat(a.monto ?? "0") || 0), 0) ?? 0)
       : 0;
 
+  // Usuario autenticado
+  const authSupabase = await createClient();
+  const { data: { user } } = await authSupabase.auth.getUser();
+
   // Verificar si el usuario actual ya se contactó
   let yaContactado = false;
-  if (tipo !== "plata") {
-    const authSupabase = await createClient();
-    const { data: { user } } = await authSupabase.auth.getUser();
-    if (user) {
-      const { data: donante } = await authSupabase
-        .from("donante")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      if (donante) {
-        const { count } = await supabase
-          .from("aporte")
-          .select("id", { count: "exact", head: true })
-          .eq("campania_id", id)
-          .eq("donante_id", donante.id)
-          .eq("estado", "a_coordinar");
-        yaContactado = (count ?? 0) > 0;
-      }
+  if (tipo !== "dinero" && user) {
+    const { data: donante } = await authSupabase
+      .from("donante")
+      .select("id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    if (donante) {
+      const { count } = await supabase
+        .from("aporte")
+        .select("id", { count: "exact", head: true })
+        .eq("campania_id", id)
+        .eq("donante_id", donante.id)
+        .eq("estado", "a_coordinar");
+      yaContactado = (count ?? 0) > 0;
     }
   }
 
@@ -197,10 +199,12 @@ export default async function CausaDetailPage({ params }: Props) {
 
         {/* Columna derecha: sidebar */}
         <div className="sticky top-28">
-          {tipo === "plata" ? (
+          {tipo === "dinero" ? (
             <>
               <DonacionForm
                 campaniaId={id}
+                campaniaSlug={slug}
+                isLoggedIn={!!user}
                 recaudado={recaudadoTotal > 0 ? recaudadoTotal : null}
                 objetivo={null}
               />
@@ -283,6 +287,7 @@ export default async function CausaDetailPage({ params }: Props) {
                 };
               })}
               yaContactado={yaContactado}
+              isLoggedIn={!!user}
             />
           )}
         </div>

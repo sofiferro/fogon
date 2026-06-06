@@ -1,4 +1,4 @@
-export type TipoAporte = 'plata' | 'especie' | 'voluntariado'
+export type TipoAporte = 'dinero' | 'especie' | 'voluntariado'
 export type ModalidadAporte = 'unica' | 'suscripcion'
 export type EstadoAporte = 'pendiente' | 'confirmado' | 'a_coordinar'
 

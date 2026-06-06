@@ -1,4 +1,4 @@
-export type TipoDonacion = "plata" | "especie" | "voluntariado";
+export type TipoDonacion = "dinero" | "especie" | "voluntariado";
 
 export interface OnboardingData {
   nombre: string;
@@ -6,7 +6,7 @@ export interface OnboardingData {
   email: string;
   intereses: string[];
   objetivo_tipos: TipoDonacion[];
-  meta_plata: string;
+  meta_dinero: string;
   meta_especie: string;
   meta_voluntariado: string;
 }

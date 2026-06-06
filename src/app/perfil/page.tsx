@@ -19,7 +19,7 @@ const MOCK_OBJETIVO: ObjetivoDonante = {
   id: "o-1",
   donante_id: "d-1",
   anio: 2026,
-  tipo: "plata",
+  tipo: "dinero",
   meta_cantidad: null,
   meta_monto: 50000,
   progreso_cantidad: 0,
@@ -32,7 +32,7 @@ const MOCK_CAUSAS_SUGERIDAS = [
     id: "c-1",
     titulo: "Tratamientos para personas con VIH",
     ongNombre: "Fundación Huésped",
-    tipo: "plata" as const,
+    tipo: "dinero" as const,
     categoria: "Salud",
   },
   {

@@ -1,4 +1,4 @@
-export type TipoDonacion = 'plata' | 'especie' | 'voluntariado' | 'general'
+export type TipoDonacion = 'dinero' | 'especie' | 'voluntariado' | 'general'
 
 export interface Ong {
   id: string

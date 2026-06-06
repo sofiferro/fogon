@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
-type TipoCausa = "plata" | "especie" | "voluntariado";
+type TipoCausa = "dinero" | "especie" | "voluntariado";
 
 interface BaseExito {
   donante: string;
@@ -18,7 +18,7 @@ interface BaseExito {
 }
 
 export interface ExitoPlata extends BaseExito {
-  tipo: "plata";
+  tipo: "dinero";
   monto: number;
   modalidad: "unica" | "mensual";
   impactoDesc?: string;
@@ -123,8 +123,8 @@ const CONFIG: Record<TipoCausa, {
   titulo: (nombre: string) => string;
   subtitulo: (ong: string) => string;
 }> = {
-  plata: {
-    seccion: "DONACIÓN DE PLATA",
+  dinero: {
+    seccion: "DONACIÓN EN DINERO",
     iconBg: "bg-primary/10",
     icon: Heart,
     iconColor: "text-primary",
@@ -194,7 +194,7 @@ export function DonarExito({ data }: { data: ExitoData }) {
           <ResumenRow label="Campaña" value={data.campania} />
           <ResumenRow label="ONG" value={data.ong} />
 
-          {data.tipo === "plata" && (
+          {data.tipo === "dinero" && (
             <>
               <ResumenRow label="Monto" value={formatARS(data.monto)} highlight />
               <ResumenRow label="Modalidad" value={data.modalidad === "unica" ? "Única vez" : "Mensual"} />
@@ -215,8 +215,8 @@ export function DonarExito({ data }: { data: ExitoData }) {
           )}
         </div>
 
-        {/* Impacto — solo plata */}
-        {data.tipo === "plata" && data.impactoDesc && (
+        {/* Impacto — solo dinero */}
+        {data.tipo === "dinero" && data.impactoDesc && (
           <div className="flex gap-3 items-start bg-green-50 border border-green-200 rounded-2xl p-4">
             <div className="size-5 rounded-sm bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
               <Heart className="size-3 text-primary" />

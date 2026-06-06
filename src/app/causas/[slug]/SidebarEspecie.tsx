@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { X } from "lucide-react";
 import { guardarAporteEspecie, guardarAporteVoluntariado } from "@/actions/aportes";
 
@@ -17,6 +18,7 @@ interface Props {
   objetivoUnidades: number | null;
   contactos: Contacto[];
   yaContactado: boolean;
+  isLoggedIn: boolean;
 }
 
 function timeAgo(fecha: string): string {
@@ -37,8 +39,22 @@ export function SidebarEspecie({
   objetivoUnidades,
   contactos,
   yaContactado: initialYaContactado,
+  isLoggedIn,
 }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn && searchParams.get("modal") === "1") {
+      setModalOpen(true);
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("modal");
+      const newUrl = params.size > 0 ? `${pathname}?${params}` : pathname;
+      router.replace(newUrl, { scroll: false });
+    }
+  }, [isLoggedIn, pathname, router, searchParams]);
   const [yaContactado, setYaContactado] = useState(initialYaContactado);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -109,7 +125,14 @@ export function SidebarEspecie({
 
         {/* CTA */}
         <button
-          onClick={() => !yaContactado && setModalOpen(true)}
+          onClick={() => {
+            if (yaContactado) return;
+            if (!isLoggedIn) {
+              router.push(`/login?redirect=${pathname}?modal=1`);
+              return;
+            }
+            setModalOpen(true);
+          }}
           disabled={yaContactado}
           className={`flex items-center justify-center h-12 w-full rounded-full text-base font-medium shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors ${
             yaContactado

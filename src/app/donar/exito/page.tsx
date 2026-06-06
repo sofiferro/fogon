@@ -3,7 +3,7 @@ import type { ExitoData } from "@/components/donacion/DonarExito";
 
 // TODO: reemplazar con datos reales desde la sesión o query params
 const MOCK: ExitoData = {
-  tipo: "plata",
+  tipo: "dinero",
   donante: "Josefina",
   campania: "Medicamentos para tratamientos de VIH",
   ong: "Fundación Huésped",

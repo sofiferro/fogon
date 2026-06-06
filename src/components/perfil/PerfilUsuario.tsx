@@ -23,7 +23,7 @@ interface CausaSugerida {
   id: string;
   titulo: string;
   ongNombre: string;
-  tipo: "plata" | "especie" | "voluntariado";
+  tipo: "dinero" | "especie" | "voluntariado";
   categoria: string;
 }
 
@@ -36,7 +36,7 @@ interface PerfilUsuarioProps {
 }
 
 const TIPO_BADGE = {
-  plata:        "bg-[#fef3c7] text-[#92400e]",
+  dinero:        "bg-[#fef3c7] text-[#92400e]",
   especie:      "bg-green-100 text-green-700",
   voluntariado: "bg-blue-100 text-blue-700",
 };

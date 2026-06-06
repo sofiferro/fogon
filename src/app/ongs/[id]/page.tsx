@@ -6,7 +6,7 @@ import { CausaCard } from "@/components/cards/CausaCard";
 
 
 const TIPO_LABEL: Record<string, string> = {
-  plata: "Dinero",
+  dinero: "Dinero",
   especie: "Cosas",
   voluntariado: "Voluntariado",
   general: "General",
@@ -276,7 +276,7 @@ export default async function OngDetailPage({ params }: Props) {
                 tipoNecesidad={c.tipo_necesidad}
                 fechaLimite={c.fecha_limite}
                 ongNombre={null}
-                objetivoDescripcion={c.tipo_necesidad !== "plata" ? c.descripcion : null}
+                objetivoDescripcion={c.tipo_necesidad !== "dinero" ? c.descripcion : null}
               />
             ))}
           </div>

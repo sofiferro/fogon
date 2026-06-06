@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { StepProps, TipoDonacion } from "../types";
 
 const TIPOS: { value: TipoDonacion; emoji: string; label: string; desc: string }[] = [
-  { value: "plata", emoji: "💰", label: "Plata", desc: "Donaciones en efectivo o Mercado Pago" },
+  { value: "dinero", emoji: "💰", label: "Dinero", desc: "Donaciones en efectivo o Mercado Pago" },
   { value: "especie", emoji: "📦", label: "Especie", desc: "Ropa, alimentos, materiales" },
   { value: "voluntariado", emoji: "🤝", label: "Voluntariado", desc: "Tu tiempo y talento" },
 ];

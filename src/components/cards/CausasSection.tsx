@@ -6,9 +6,10 @@ interface CausasSectionProps {
   title: string;
   urgenciaMin?: number;
   limit?: number;
+  tipoNecesidad?: "dinero" | "especie" | "voluntariado";
 }
 
-export async function CausasSection({ title, urgenciaMin, limit = 4 }: CausasSectionProps) {
+export async function CausasSection({ title, urgenciaMin, limit = 4, tipoNecesidad }: CausasSectionProps) {
   const supabase = createAdminClient();
 
   let query = supabase
@@ -20,6 +21,10 @@ export async function CausasSection({ title, urgenciaMin, limit = 4 }: CausasSec
 
   if (urgenciaMin != null) {
     query = query.gte("urgencia", urgenciaMin);
+  }
+
+  if (tipoNecesidad != null) {
+    query = query.eq("tipo_necesidad", tipoNecesidad);
   }
 
   const { data: campanias } = await query;
@@ -38,7 +43,7 @@ export async function CausasSection({ title, urgenciaMin, limit = 4 }: CausasSec
             tipoNecesidad={c.tipo_necesidad}
             fechaLimite={c.fecha_limite}
             ongNombre={(c.ong as { nombre?: string } | null)?.nombre ?? null}
-            objetivoDescripcion={c.tipo_necesidad !== "plata" ? c.descripcion : null}
+            objetivoDescripcion={c.tipo_necesidad !== "dinero" ? c.descripcion : null}
             priority
           />
         ))}

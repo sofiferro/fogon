@@ -4,7 +4,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export type EstadoCampania = "activa" | "borrador" | "cerrada";
-export type TipoNecesidad = "plata" | "especie" | "voluntariado";
+export type TipoNecesidad = "dinero" | "especie" | "voluntariado";
 
 export interface CampaniaOng {
   id: string;
@@ -27,7 +27,7 @@ const ESTADO_BADGE: Record<EstadoCampania, { label: string; className: string }>
 };
 
 const TIPO_BADGE: Record<TipoNecesidad, { label: string; className: string }> = {
-  plata:        { label: "plata",        className: "bg-[#fef3c7] text-[#92400e]" },
+  dinero:        { label: "dinero",        className: "bg-[#fef3c7] text-[#92400e]" },
   especie:      { label: "especie",      className: "bg-green-100 text-green-700" },
   voluntariado: { label: "voluntariado", className: "bg-blue-100 text-blue-700" },
 };
@@ -95,7 +95,7 @@ export function CampaniaCardOng({ campania }: { campania: CampaniaOng }) {
               style={{ width: `${porcentaje}%` }}
             />
           </div>
-          {tipoNecesidad === "plata" ? (
+          {tipoNecesidad === "dinero" ? (
             <div className="flex items-center justify-between text-sm">
               <span className="font-semibold text-foreground">{formatARS(recaudado ?? 0)}</span>
               <span className="text-muted-foreground">
